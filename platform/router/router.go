@@ -46,6 +46,7 @@ func New(auth *authenticator.Authenticator) *gin.Engine {
 
 	router.GET("/login", login.Handler(auth))
 	router.GET("/callback", callback.Handler(auth))
+	//known bug, will load user.html and home.html when visiting /user directly while signed out
 	router.GET("/user", middleware.IsAuthenticated, user.Handler)
 	router.GET("/logout", logout.Handler)
 
