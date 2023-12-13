@@ -10,12 +10,15 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
+	_ "github.com/lib/pq"
+
 	"01-Login/platform/authenticator"
 	"01-Login/platform/middleware"
 	"01-Login/web/app/callback"
 	"01-Login/web/app/login"
 	"01-Login/web/app/logout"
 	"01-Login/web/app/user"
+	"01-Login/web/app/userdb"
 )
 
 // New registers the routes and returns the router.
@@ -49,6 +52,7 @@ func New(auth *authenticator.Authenticator) *gin.Engine {
 	//known bug, will load user.html and home.html when visiting /user directly while signed out
 	router.GET("/user", middleware.IsAuthenticated, user.Handler)
 	router.GET("/logout", logout.Handler)
+	router.GET("/userdb", userdb.Handler)
 
 	return router
 }
